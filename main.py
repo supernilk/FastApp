@@ -17,4 +17,8 @@ async def url():
 #Documentacion con Swagger: http://127.0.0.1:8000/docs
 #Documentacion con Redocly: http://127.0.0.1:8000/redoc
 
-#
+# --------- CRUD --------- #
+#Post:   para crear datos.
+#Get:    para leer datos.
+#Put:    para actualizar datos.
+#Delete: para eliminar datos
