@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-#Iniciar el server: py -m uvicorn main:app --reload
+#Iniciar el server: py -m uvicorn user:app --reload
 
 #Entidad usuario
 class Usuario(BaseModel):
@@ -24,4 +24,8 @@ async def listar_usuarios():
 
 @app.get("/usuario/{id}")
 async def buscar_usuario(id:int):
-    return Usuarios(id)
+    try:
+        usuarios = filter(lambda user:user.id==id,Usuarios)
+        return list(usuarios)[0]
+    except:
+        return {"error":"no se ha encontrado el usuario"}
