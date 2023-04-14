@@ -28,4 +28,4 @@ async def buscar_usuario(id:int):
         usuarios = filter(lambda user:user.id==id,Usuarios)
         return list(usuarios)[0]
     except:
-        return {"error":"no se ha encontrado el usuario"}
+        return {"error":"no se ha encontradogit el usuario"}
