@@ -47,3 +47,12 @@ def buscar_usuario(id:int):
 @app.post("/usuario/")
 async def Agregar_usuario():
     return ("agregando usuario")
+
+@app.get("/item/{item_id}")# Query
+async def leer_item(item_id:int, q:str = None):
+    return {"item_id":item_id, "q":q}
+    #http://127.0.0.1:8000/item/3?q=Snilk
+    #R: {"item_id":3,"q":"Snilk"}
+    #q es opcional
+    #http://127.0.0.1:8000/item/3
+    #{"item_id":3,"q":null}
