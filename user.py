@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI(
+    title="mi proyecto Fastapi",
+    description="creando mi api rest",
+    version="0.0.0.0.0.0.0.001")
 
 #-----------------  Iniciar el server  -----------------  
 #pyenv local 3.7.4
@@ -9,6 +12,7 @@ app = FastAPI()
 #.\venv\Scripts\activate
 #py -m uvicorn user:app --reload
 
+#https://www.youtube.com/watch?v=dAQENEPAqsc&t=99s
 
 #Entidad usuario
 class Usuario(BaseModel):
