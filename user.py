@@ -23,24 +23,36 @@ class Usuario(BaseModel):
     edad: int
 
 #lista que puede provenir de una base de datos
+#user_list
 Usuarios = [Usuario(id=1, nombre="John", apellido="Barragan", url="html://google.co.ve",edad=45),
             Usuario(id=2, nombre="Pedro", apellido="Perez", url="html://perez.com",edad=23),
             Usuario(id=3, nombre="ana", apellido="rodriguez", url="html://zorras.us",edad=18)]
 
 @app.get("/usuarios")
+#/usuarios
 async def listar_usuarios():
     return Usuarios
 
 
 @app.get("/usuario/{ide}")# Path
+#/usuario/1
 async def buscar_usuario(ide:int):
     return buscar_usuario(ide)
 
 
 @app.get("/usuario/")# Query
+#/usuario/?id=1
 async def buscar_usuario(id:int):
     return buscar_usuario(id)
-    
+
+@app.post("/usuario/")#insertar un nuevo usuario
+async def Agregar_usuario(usuario:Usuario):
+#    return "agregando usuario con Usuario"
+    if type( buscar_usuario(usuario.id) ) == Usuario:
+        return {"error":"usuario ya existe"}
+    else: 
+        Usuarios.append(usuario)
+            
 def buscar_usuario(id:int):
     try:
         usuarios = filter(lambda user:user.id==id,Usuarios)
@@ -48,15 +60,13 @@ def buscar_usuario(id:int):
     except:
         return {"error":"no se ha encontrado el usuario"}
 
-@app.post("/usuario/")
-async def Agregar_usuario():
-    return ("agregando usuario")
-
 @app.get("/item/{item_id}")# Query
+#http://127.0.0.1:8000/item/3?q=Snilk
+#R: {"item_id":3,"q":"Snilk"}
+#q es opcional
+#http://127.0.0.1:8000/item/3
+#{"item_id":3,"q":null}
 async def leer_item(item_id:int, q:str = None):
     return {"item_id":item_id, "q":q}
-    #http://127.0.0.1:8000/item/3?q=Snilk
-    #R: {"item_id":3,"q":"Snilk"}
-    #q es opcional
-    #http://127.0.0.1:8000/item/3
-    #{"item_id":3,"q":null}
+
+
