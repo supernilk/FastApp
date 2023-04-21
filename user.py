@@ -52,6 +52,7 @@ async def crear_usuario(usuario:Usuario):
         return {"error":"usuario ya existe"}
     else: 
         Usuarios.append(usuario)
+        return usuario
             
 @app.put("/usuario/")#actualizar un nuevo usuario
 async def actualizar_usuario(usuario:Usuario):
@@ -63,6 +64,23 @@ async def actualizar_usuario(usuario:Usuario):
     
     if not encontrado:
         return {"error":"no se ha actualizado el usuario"}
+    else:
+        return usuario
+
+@app.delete("/usuario/{id}")# borramos un usuario
+#/usuario/1
+async def buscar_usuario(id:int):
+    encontrado=False
+    for index, consultar_usuario in enumerate(Usuarios):
+        if consultar_usuario.id==id:
+            del Usuarios[index]
+            encontrado=True
+
+    if not encontrado:
+        return {"error":"no se ha borrado el usuario"}
+    else:
+        return {"usuario borrado"}
+    
 
 
 def buscar_usuario(id:int):
