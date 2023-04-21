@@ -69,7 +69,7 @@ async def actualizar_usuario(usuario:Usuario):
 
 @app.delete("/usuario/{id}")# borramos un usuario
 #/usuario/1
-async def buscar_usuario(id:int):
+async def borra_usuario(id:int):
     encontrado=False
     for index, consultar_usuario in enumerate(Usuarios):
         if consultar_usuario.id==id:
