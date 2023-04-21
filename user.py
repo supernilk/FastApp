@@ -45,14 +45,26 @@ async def buscar_usuario(ide:int):
 async def buscar_usuario(id:int):
     return buscar_usuario(id)
 
-@app.post("/usuario/")#insertar un nuevo usuario
-async def Agregar_usuario(usuario:Usuario):
+@app.post("/usuario/")#creamos un nuevo usuario
+async def crear_usuario(usuario:Usuario):
 #    return "agregando usuario con Usuario"
     if type( buscar_usuario(usuario.id) ) == Usuario:
         return {"error":"usuario ya existe"}
     else: 
         Usuarios.append(usuario)
             
+@app.put("/usuario/")#actualizar un nuevo usuario
+async def actualizar_usuario(usuario:Usuario):
+    encontrado=False
+    for index, consultar_usuario in enumerate(Usuarios):
+        if consultar_usuario.id==usuario.id:
+            Usuarios[index]=usuario
+            encontrado=True
+    
+    if not encontrado:
+        return {"error":"no se ha actualizado el usuario"}
+
+
 def buscar_usuario(id:int):
     try:
         usuarios = filter(lambda user:user.id==id,Usuarios)
