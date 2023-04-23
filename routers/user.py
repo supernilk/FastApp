@@ -1,10 +1,7 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI(
-    title="mi proyecto Fastapi",
-    description="creando mi api rest",
-    version="0.0.0.0.0.0.0.001")
+router = APIRouter()
 
 #-----------------  Iniciar el server  -----------------  
 #pyenv local 3.7.4
@@ -28,33 +25,34 @@ Usuarios = [Usuario(id=1, nombre="John", apellido="Barragan", url="html://google
             Usuario(id=2, nombre="Pedro", apellido="Perez", url="html://perez.com",edad=23),
             Usuario(id=3, nombre="ana", apellido="rodriguez", url="html://zorras.us",edad=18)]
 
-@app.get("/usuarios")
+@router.get("/usuarios")
 #/usuarios
 async def listar_usuarios():
     return Usuarios
 
 
-@app.get("/usuario/{ide}")# Path
+@router.get("/usuario/{ide}")# Path
 #/usuario/1
 async def buscar_usuario(ide:int):
     return buscar_usuario(ide)
 
 
-@app.get("/usuario/")# Query
+@router.get("/usuario/")# Query
 #/usuario/?id=1
 async def buscar_usuario(id:int):
     return buscar_usuario(id)
 
-@app.post("/usuario/")#creamos un nuevo usuario
+@router.post("/usuario/", response_model = Usuario, status_code = 201)#creamos un nuevo usuario
 async def crear_usuario(usuario:Usuario):
 #    return "agregando usuario con Usuario"
     if type( buscar_usuario(usuario.id) ) == Usuario:
-        return {"error":"usuario ya existe"}
+        raise HTTPException(status_code=404)
+        #return {"error":"usuario ya existe"}
     else: 
         Usuarios.append(usuario)
         return usuario
             
-@app.put("/usuario/")#actualizar un nuevo usuario
+@router.put("/usuario/")#actualizar un nuevo usuario
 async def actualizar_usuario(usuario:Usuario):
     encontrado=False
     for index, consultar_usuario in enumerate(Usuarios):
@@ -67,7 +65,7 @@ async def actualizar_usuario(usuario:Usuario):
     else:
         return usuario
 
-@app.delete("/usuario/{id}")# borramos un usuario
+@router.delete("/usuario/{id}")# borramos un usuario
 #/usuario/1
 async def borra_usuario(id:int):
     encontrado=False
@@ -90,7 +88,7 @@ def buscar_usuario(id:int):
     except:
         return {"error":"no se ha encontrado el usuario"}
 
-@app.get("/item/{item_id}")# Query
+@router.get("/item/{item_id}")# Query
 #http://127.0.0.1:8000/item/3?q=Snilk
 #R: {"item_id":3,"q":"Snilk"}
 #q es opcional

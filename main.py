@@ -1,7 +1,16 @@
 #https://stackoverflow.com/questions/64936440/python-uvicorn-the-term-uvicorn-is-not-recognized-as-the-name-of-a-cmdlet-f
 from fastapi import FastAPI
+from routers import productos
+from routers import user
 
-app = FastAPI()
+app = FastAPI(
+    title="mi proyecto Fastapi",
+    description="creando mi api rest",
+    version="0.0.0.0.0.0.0.001")
+
+# Routers
+app.include_router(productos.router)
+app.include_router(user.router)
 
 @app.get("/")
 async def root():
