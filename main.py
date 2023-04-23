@@ -1,7 +1,7 @@
 #https://stackoverflow.com/questions/64936440/python-uvicorn-the-term-uvicorn-is-not-recognized-as-the-name-of-a-cmdlet-f
 from fastapi import FastAPI
-from routers import productos
-from routers import user
+from routers import productos, user
+
 
 app = FastAPI(
     title="mi proyecto Fastapi",

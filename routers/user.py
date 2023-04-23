@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-router = APIRouter()
+router = APIRouter(prefix="/usuario",
+                   tags = ["usuario"],
+                   responses= { 404 : {"message":"no encontrado"} } )
 
 #-----------------  Iniciar el server  -----------------  
 #pyenv local 3.7.4
@@ -25,24 +27,24 @@ Usuarios = [Usuario(id=1, nombre="John", apellido="Barragan", url="html://google
             Usuario(id=2, nombre="Pedro", apellido="Perez", url="html://perez.com",edad=23),
             Usuario(id=3, nombre="ana", apellido="rodriguez", url="html://zorras.us",edad=18)]
 
-@router.get("/usuarios")
+@router.get("/")
 #/usuarios
 async def listar_usuarios():
     return Usuarios
 
 
-@router.get("/usuario/{ide}")# Path
+@router.get("/{ide}")# Path
 #/usuario/1
 async def buscar_usuario(ide:int):
     return buscar_usuario(ide)
 
 
-@router.get("/usuario/")# Query
+@router.get("/")# Query
 #/usuario/?id=1
 async def buscar_usuario(id:int):
     return buscar_usuario(id)
 
-@router.post("/usuario/", response_model = Usuario, status_code = 201)#creamos un nuevo usuario
+@router.post("/", response_model = Usuario, status_code = 201)#creamos un nuevo usuario
 async def crear_usuario(usuario:Usuario):
 #    return "agregando usuario con Usuario"
     if type( buscar_usuario(usuario.id) ) == Usuario:
@@ -52,7 +54,7 @@ async def crear_usuario(usuario:Usuario):
         Usuarios.append(usuario)
         return usuario
             
-@router.put("/usuario/")#actualizar un nuevo usuario
+@router.put("/")#actualizar un nuevo usuario
 async def actualizar_usuario(usuario:Usuario):
     encontrado=False
     for index, consultar_usuario in enumerate(Usuarios):
@@ -65,7 +67,7 @@ async def actualizar_usuario(usuario:Usuario):
     else:
         return usuario
 
-@router.delete("/usuario/{id}")# borramos un usuario
+@router.delete("/{id}")# borramos un usuario
 #/usuario/1
 async def borra_usuario(id:int):
     encontrado=False
