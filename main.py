@@ -1,7 +1,7 @@
 #https://stackoverflow.com/questions/64936440/python-uvicorn-the-term-uvicorn-is-not-recognized-as-the-name-of-a-cmdlet-f
 from fastapi import FastAPI
 from routers import productos, user
-
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title="mi proyecto Fastapi",
@@ -11,6 +11,10 @@ app = FastAPI(
 # Routers
 app.include_router(productos.router)
 app.include_router(user.router)
+
+# Archivos Estaticos: imagenes, documentos, videos
+app.mount("/static",StaticFiles(directory="static"), name="static")
+# R: http://127.0.0.1:8000/static/imagenes/pescadito.jpg
 
 @app.get("/")
 async def root():
