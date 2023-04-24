@@ -11,6 +11,12 @@ router = APIRouter(prefix="/usuario",
 #.\venv\Scripts\activate
 #py -m uvicorn user:app --reload
 
+#pip freeze     <--- ver la lista de paquetes instalados
+#pip install "fastapi[all]"
+#pip install "uvicorn[standard]"
+
+#py -m pip install --upgrade pi
+
 #https://www.youtube.com/watch?v=dAQENEPAqsc&t=99s
 
 #Entidad usuario
