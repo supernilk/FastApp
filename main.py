@@ -9,8 +9,8 @@ app = FastAPI(
     version="0.0.0.0.0.0.0.001")
 
 # Routers
-app.include_router(productos.router)
-app.include_router(user.router)
+#app.include_router(productos.router)
+#app.include_router(user.router)
 
 # Archivos Estaticos: imagenes, documentos, videos
 app.mount("/static",StaticFiles(directory="static"), name="static")
